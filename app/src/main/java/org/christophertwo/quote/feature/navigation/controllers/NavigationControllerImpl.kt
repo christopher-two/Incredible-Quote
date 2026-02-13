@@ -42,4 +42,8 @@ class NavigationControllerImpl(
     override fun getCurrentTab(): AppTab {
         return homeNavigator.currentTab
     }
+
+    override fun getCurrentStack(): List<NavKey> {
+        return homeNavigator.currentStack
+    }
 }

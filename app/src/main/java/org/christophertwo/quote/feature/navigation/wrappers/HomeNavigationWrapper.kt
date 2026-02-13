@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import org.christophertwo.quote.feature.navigation.controllers.NavigationController
 import org.koin.compose.koinInject
 import org.koin.compose.navigation3.koinEntryProvider
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -19,9 +20,9 @@ import org.christophertwo.quote.feature.navigation.navigator.HomeNavigator
 fun HomeNavigationWrapper(
     modifier: Modifier = Modifier
 ) {
-    val homeNavigator: HomeNavigator = koinInject()
+    val homeNavigator: NavigationController = koinInject()
 
-    val rootBackStack = homeNavigator.currentStack
+    val rootBackStack = homeNavigator.getCurrentStack()
 
     NavDisplay(
         backStack = rootBackStack,

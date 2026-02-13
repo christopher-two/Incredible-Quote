@@ -9,11 +9,12 @@ import org.christophertwo.quote.feature.navigation.routes.AppTab
 import org.christophertwo.quote.feature.navigation.routes.RouteHome
 
 class HomeNavigator {
-    var currentTab by mutableStateOf(AppTab.Screen1)
+    var currentTab by mutableStateOf(AppTab.Quote)
         private set
 
     private val stacks = mapOf(
-        AppTab.Screen1 to mutableStateListOf<NavKey>(RouteHome.Pantalla1)
+        AppTab.Quote to mutableStateListOf<NavKey>(RouteHome.Quote),
+        AppTab.Products to mutableStateListOf<NavKey>(RouteHome.Products)
     )
 
     val currentStack: List<NavKey>
@@ -36,8 +37,8 @@ class HomeNavigator {
             return true
         }
 
-        if (currentTab != AppTab.Screen1) {
-            currentTab = AppTab.Screen1
+        if (currentTab != AppTab.Products) {
+            currentTab = AppTab.Products
             return true
         }
 

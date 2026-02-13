@@ -17,7 +17,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.christophertwo.quote.core.ui.theme.AppTheme
 import org.christophertwo.quote.feature.home.presentation.components.ExitAppDialog
 import org.christophertwo.quote.feature.home.presentation.components.HomeBottomBar
-import org.christophertwo.quote.feature.home.presentation.components.HomeFab
 import org.christophertwo.quote.feature.home.presentation.components.HomeTopBar
 import org.christophertwo.quote.feature.navigation.routes.AppTab
 import org.christophertwo.quote.feature.navigation.wrappers.HomeNavigationWrapper
@@ -50,7 +49,7 @@ fun HomeScreen(
     }
 
     BackHandler(
-        enabled = state.selectedTab == AppTab.Screen1,
+        enabled = state.selectedTab == AppTab.Quote,
         onBack = { onAction(HomeAction.OnBackPressed) }
     )
 
@@ -70,15 +69,6 @@ fun HomeScreen(
                     onAction(HomeAction.OnTabSelected(tab))
                 }
             )
-        },
-        floatingActionButton = {
-            if (state.showFab) {
-                HomeFab(
-                    onClick = {
-                        onAction(HomeAction.OnFabClick)
-                    }
-                )
-            }
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)

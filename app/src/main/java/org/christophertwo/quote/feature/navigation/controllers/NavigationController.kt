@@ -34,8 +34,6 @@ interface NavigationController {
      */
     fun clearAndNavigateTo(route: RouteGlobal)
 
-    // Home Navigation (Tab-based navigation within Home screen)
-
     /**
      * Switch to a different tab in the Home screen.
      *
@@ -63,4 +61,6 @@ interface NavigationController {
      * @return The currently selected tab
      */
     fun getCurrentTab(): AppTab
+
+    fun getCurrentStack(): List<NavKey>
 }
