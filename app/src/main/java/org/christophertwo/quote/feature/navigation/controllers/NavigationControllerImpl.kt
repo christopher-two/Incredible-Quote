@@ -16,7 +16,7 @@ class NavigationControllerImpl(
 
     override fun back(): Boolean {
         globalNavigator.back()
-        return globalNavigator.rootBackStack.isNotEmpty()
+        return globalNavigator.rootBackStack.value.isEmpty()
     }
 
     override fun backTo(route: RouteGlobal) {

@@ -55,9 +55,7 @@ class MainActivity : ComponentActivity() {
 
             // Aplicar tema con las preferencias del usuario
             AppTheme(preferences = state.themePreferences) {
-                RootNavigationWrapper(
-                    isLoggedIn = state.isAuthenticated
-                )
+                RootNavigationWrapper()
             }
         }
     }
