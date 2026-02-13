@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ==================== TEMA PARA MODO OSCURO ==================== -->
+    <!-- Splash Screen automáticamente usa colores según el tema del sistema -->
+    <style name="Theme.Tamplete" parent="android:Theme.Material.NoActionBar">
+        <!-- Color de fondo de la ventana (usado por SplashScreen) -->
+        <item name="android:windowBackground">@color/splash_background_dark</item>
+
+        <!-- Color de la barra de estado -->
+        <item name="android:statusBarColor">@color/splash_status_bar_dark</item>
+
+        <!-- Iconos de la barra de estado en blanco para modo oscuro -->
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Color de la barra de navegación -->
+        <item name="android:navigationBarColor">@color/splash_background_dark</item>
+
+        <!-- Iconos de la barra de navegación en blanco -->
+        <item name="android:windowLightNavigationBar">false</item>
+
+        <!-- Splash Screen API (Android 12+) - Modo Oscuro -->
+        <item name="android:windowSplashScreenBackground">@color/splash_background_dark</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/splash_icon_dark</item>
+    </style>
+</resources>
+

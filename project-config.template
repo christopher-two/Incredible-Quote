@@ -1,0 +1,73 @@
+# ========================================================================================
+# ARCHIVO DE CONFIGURACIÓN DEL TEMPLATE
+# ========================================================================================
+# Este archivo define los valores por defecto del template que serán reemplazados
+# durante el proceso de inicialización.
+#
+# NO EDITES ESTE ARCHIVO A MENOS QUE ESTÉS MODIFICANDO EL TEMPLATE BASE
+# ========================================================================================
+
+# Versión del template
+TEMPLATE_VERSION=1.0.0
+
+# ==================== VALORES POR DEFECTO ====================
+# Estos valores serán reemplazados cuando ejecutes init-project.sh
+
+# Nombre del proyecto en settings.gradle.kts
+DEFAULT_PROJECT_NAME=Tamplete
+
+# Package base de la aplicación
+DEFAULT_PACKAGE_BASE=org.override.tamplete
+
+# Application ID (identificador único en Play Store)
+DEFAULT_APP_ID=org.override.tamplete
+
+# Nombre visible de la aplicación
+DEFAULT_APP_DISPLAY_NAME=Tamplete
+
+# Nombre del tema XML
+DEFAULT_THEME_NAME=Theme.Tamplete
+
+# Nombre de la base de datos
+DEFAULT_DATABASE_NAME=tamplete_database
+
+# ==================== CONFIGURACIÓN DEL SCRIPT ====================
+
+# Crear backup por defecto (true/false)
+DEFAULT_CREATE_BACKUP=true
+
+# Archivos que serán modificados durante la inicialización
+FILES_TO_UPDATE=(
+    "settings.gradle.kts"
+    "app/build.gradle.kts"
+    "app/src/main/AndroidManifest.xml"
+    "app/src/main/res/values/strings.xml"
+    "app/src/main/res/values/themes.xml"
+    "app/src/main/res/values-night/themes.xml"
+    "app/src/main/res/values-v31/themes.xml"
+)
+
+# Directorios de código fuente que serán reorganizados
+SOURCE_SETS=(
+    "app/src/main/java"
+    "app/src/test/java"
+    "app/src/androidTest/java"
+)
+
+# ==================== VALIDACIONES ====================
+
+# Regex para validar nombres de package
+PACKAGE_REGEX="^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+
+# Niveles mínimos requeridos en el package (ej: com.company.app = 3 niveles)
+MIN_PACKAGE_LEVELS=3
+
+# ==================== NOTAS ====================
+#
+# - Este archivo es usado por el script de inicialización como referencia
+# - Los valores DEFAULT_* son los que están actualmente en el proyecto
+# - Durante la inicialización, estos valores serán reemplazados por los que proporcione el usuario
+# - El archivo .template-initialized guardará un registro de la configuración aplicada
+#
+# ========================================================================================
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Tamplete" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Color de fondo de la ventana (usado por SplashScreen antes de Compose) -->
+        <item name="android:windowBackground">@color/splash_background_light</item>
+
+        <!-- Color de la barra de estado -->
+        <item name="android:statusBarColor">@color/splash_status_bar_light</item>
+
+        <!-- Iconos de la barra de estado en negro para modo claro -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Color de la barra de navegación -->
+        <item name="android:navigationBarColor">@color/splash_background_light</item>
+
+        <!-- Iconos de la barra de navegación en negro -->
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Splash Screen API (Android 12+) -->
+        <item name="android:windowSplashScreenBackground">@color/splash_background_light
+        </item>
+        <item name="android:windowSplashScreenAnimatedIcon">
+            @drawable/ic_launcher_foreground
+        </item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+    </style>
+</resources>
