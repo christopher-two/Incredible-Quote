@@ -55,11 +55,11 @@
 -keepclasseswithmembers class kotlinx.serialization.json.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
--keep,includedescriptorclasses class org.override.tamplete.**$$serializer { *; }
--keepclassmembers class org.override.tamplete.** {
+-keep,includedescriptorclasses class org.christophertwo.quote.**$$serializer { *; }
+-keepclassmembers class org.christophertwo.quote.** {
     *** Companion;
 }
--keepclasseswithmembers class org.override.tamplete.** {
+-keepclasseswithmembers class org.christophertwo.quote.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
 -keep class kotlinx.serialization.** { *; }
@@ -109,7 +109,7 @@
 -dontwarn androidx.room.**
 
 # Mantener todas las clases de base de datos del proyecto
--keep class org.override.tamplete.core.data.local.** { *; }
+-keep class org.christophertwo.quote.core.data.local.** { *; }
 
 # ========================================================================================
 # KOIN (INYECCIÓN DE DEPENDENCIAS)
@@ -120,8 +120,8 @@
 -keep class org.koin.androidx.** { *; }
 
 # Mantener módulos de Koin
--keep class org.override.tamplete.di.** { *; }
--keepclassmembers class org.override.tamplete.di.** { *; }
+-keep class org.christophertwo.quote.di.** { *; }
+-keepclassmembers class org.christophertwo.quote.di.** { *; }
 
 # Mantener clases con anotaciones de Koin
 -keep @org.koin.core.annotation.* class * { *; }
@@ -169,7 +169,7 @@
 -keep class androidx.datastore.*.** { *; }
 
 # Mantener serializers personalizados de DataStore
--keep class org.override.tamplete.feature.auth.data.local.UserSerializer { *; }
+-keep class org.christophertwo.quote.feature.auth.data.local.UserSerializer { *; }
 -keep class * implements androidx.datastore.core.Serializer {
     <init>(...);
 }
@@ -193,7 +193,7 @@
 -keep class com.google.firebase.vertexai.** { *; }
 
 # Firestore Models - Mantener todas las clases de datos que se guardan en Firestore
--keepclassmembers class org.override.tamplete.**.model.** {
+-keepclassmembers class org.christophertwo.quote.**.model.** {
     <fields>;
     <init>();
 }
@@ -276,13 +276,13 @@
 # MODELOS DE DATOS DEL PROYECTO
 # ========================================================================================
 # Mantener todos los modelos de dominio y DTOs
--keep class org.override.tamplete.feature.**.domain.model.** { *; }
--keep class org.override.tamplete.feature.**.data.**.dto.** { *; }
--keep class org.override.tamplete.feature.**.data.**.entity.** { *; }
+-keep class org.christophertwo.quote.feature.**.domain.model.** { *; }
+-keep class org.christophertwo.quote.feature.**.data.**.dto.** { *; }
+-keep class org.christophertwo.quote.feature.**.data.**.entity.** { *; }
 
 # Mantener User y sus serializadores
--keep class org.override.tamplete.feature.auth.domain.model.User { *; }
--keepclassmembers class org.override.tamplete.feature.auth.domain.model.User { *; }
+-keep class org.christophertwo.quote.feature.auth.domain.model.User { *; }
+-keepclassmembers class org.christophertwo.quote.feature.auth.domain.model.User { *; }
 
 # ========================================================================================
 # VIEWMODELS Y ESTADOS (MVI)
@@ -296,17 +296,17 @@
 }
 
 # Mantener States y Actions (MVI Pattern)
--keep class org.override.tamplete.**.presentation.**State { *; }
--keep interface org.override.tamplete.**.presentation.**Action { *; }
--keep class org.override.tamplete.**.presentation.**Action* { *; }
--keep class org.override.tamplete.main.Main** { *; }
+-keep class org.christophertwo.quote.**.presentation.**State { *; }
+-keep interface org.christophertwo.quote.**.presentation.**Action { *; }
+-keep class org.christophertwo.quote.**.presentation.**Action* { *; }
+-keep class org.christophertwo.quote.main.Main** { *; }
 
 # ========================================================================================
 # REPOSITORIOS E INTERFACES
 # ========================================================================================
--keep interface org.override.tamplete.**.domain.repository.** { *; }
--keep class org.override.tamplete.**.data.**Repository { *; }
--keep class org.override.tamplete.**.data.**RepositoryImpl { *; }
+-keep interface org.christophertwo.quote.**.domain.repository.** { *; }
+-keep class org.christophertwo.quote.**.data.**Repository { *; }
+-keep class org.christophertwo.quote.**.data.**RepositoryImpl { *; }
 
 # ========================================================================================
 # ENUMERACIONES Y SEALED CLASSES

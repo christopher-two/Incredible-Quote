@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ==================== TEMA BASE DE LA APLICACIÓN ==================== -->
-    <style name="Theme.Tamplete" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.Quote" parent="android:Theme.Material.Light.NoActionBar">
         <!-- Color de fondo de la ventana (usado por SplashScreen antes de Compose) -->
         <item name="android:windowBackground">@color/splash_background_light</item>
 

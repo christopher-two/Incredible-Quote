@@ -35,8 +35,8 @@ data class ProjectConfig(
 
 // Valores por defecto del template
 object TemplateDefaults {
-    const val PACKAGE_BASE = "org.override.tamplete"
-    const val DATABASE_NAME = "tamplete_database"
+    const val PACKAGE_BASE = "org.christophertwo.quote"
+    const val DATABASE_NAME = "quote_database"
 }
 
 fun main() {

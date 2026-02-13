@@ -2,7 +2,7 @@
 <resources>
     <!-- ==================== TEMA PARA MODO OSCURO ==================== -->
     <!-- Splash Screen automáticamente usa colores según el tema del sistema -->
-    <style name="Theme.Tamplete" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.Quote" parent="android:Theme.Material.NoActionBar">
         <!-- Color de fondo de la ventana (usado por SplashScreen) -->
         <item name="android:windowBackground">@color/splash_background_dark</item>
 

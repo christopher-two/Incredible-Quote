@@ -16,10 +16,10 @@ if (googleServicesFile.exists()) {
     println("   Para habilitar Firebase, agrega el archivo google-services.json en app/")
 }
 
-val nameProject = "tamplete"
+val nameProject = "quote"
 
 android {
-    namespace = "org.override.$nameProject"
+    namespace = "org.christophertwo.quote"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -27,7 +27,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "org.override.$nameProject"
+        applicationId = "org.christophertwo.quote"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

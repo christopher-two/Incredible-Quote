@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Tamplete"
+rootProject.name = "Quote"
 include(":app")
