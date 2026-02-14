@@ -6,12 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
@@ -23,8 +28,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.christophertwo.quote.core.ui.theme.AppTheme
 import org.christophertwo.quote.feature.quote.presentation.QuoteState
 import java.text.NumberFormat.getCurrencyInstance
 import java.util.Locale
@@ -50,7 +58,6 @@ fun QuoteSummary(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -111,8 +118,7 @@ fun QuoteSummary(
             SummaryRow(
                 label = "Margen de Ganancia (${state.profitMargin}%)",
                 value = currencyFormat.format(state.profitAmount),
-                isHighlighted = false,
-                valueColor = MaterialTheme.colorScheme.tertiary
+                isHighlighted = false
             )
 
             HorizontalDivider(
@@ -207,7 +213,10 @@ fun QuoteSummary(
                 // Compartir por Email
                 OutlinedButton(
                     onClick = onShareEmailClick,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
                 ) {
                     Text("Email")
                 }
@@ -224,10 +233,12 @@ private fun SummaryRow(
     modifier: Modifier = Modifier,
     labelStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
     valueStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
-    valueColor: androidx.compose.ui.graphics.Color? = null
+    valueColor: Color? = null
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 48.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -240,12 +251,29 @@ private fun SummaryRow(
             text = value,
             style = valueStyle,
             fontWeight = if (isHighlighted) FontWeight.Bold else FontWeight.Normal,
-            color = valueColor ?: if (isHighlighted) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onPrimaryContainer
-            }
+            color = valueColor ?: MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }
 
+@Preview
+@Composable
+fun QuoteSummaryPreview() {
+    AppTheme {
+        QuoteSummary(
+            state = QuoteState(
+                quantity = 10,
+                basePrice = 150.0,
+                profitMargin = 20,
+                extraCostTypes = listOf(
+                    QuoteState.ExtraCostType(
+                        id = "flete",
+                        name = "Flete",
+                        isSelected = true,
+                        cost = 200.0
+                    )
+                )
+            )
+        )
+    }
+}

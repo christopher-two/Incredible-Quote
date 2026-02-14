@@ -15,6 +15,7 @@ data class QuoteState(
     val profitMargin: Int = 50,
     val quickProfitMargins: List<Int> = listOf(0, 25, 50, 75, 100),
     val basePrice: Double = 100.0, // Precio base por unidad del producto
+    val showQuoteSavedMessage: Boolean = false,
     val sections: List<SectionGroup> = listOf(
         SectionGroup(
             title = "Tipo de Venta",

@@ -179,6 +179,10 @@ class QuoteViewModel(
                 _state.update { it.copy(quotesSearchQuery = action.query) }
                 filterSavedQuotes(action.query)
             }
+
+            is QuoteAction.OnDismissSavedMessage -> {
+                _state.update { it.copy(showQuoteSavedMessage = false) }
+            }
         }
     }
 
@@ -198,7 +202,8 @@ class QuoteViewModel(
             val updatedQuotes = (state.savedQuotes + newQuote).sortedByDescending { it.timestamp }
             state.copy(
                 savedQuotes = updatedQuotes,
-                filteredSavedQuotes = updatedQuotes
+                filteredSavedQuotes = updatedQuotes,
+                showQuoteSavedMessage = true
             )
         }
     }
@@ -262,7 +267,7 @@ class QuoteViewModel(
                         isSearchingProducts = false
                     )
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _state.update {
                     it.copy(
                         productSearchResults = emptyList(),

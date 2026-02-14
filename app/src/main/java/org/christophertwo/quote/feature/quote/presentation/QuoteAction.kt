@@ -58,4 +58,6 @@ sealed interface QuoteAction {
     data class OnQuotesSearchQueryChanged(
         val query: String
     ) : QuoteAction
+
+    data object OnDismissSavedMessage : QuoteAction
 }

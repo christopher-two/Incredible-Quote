@@ -2,14 +2,23 @@ package org.christophertwo.quote.feature.quote.presentation
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +39,19 @@ fun QuoteRoot(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    // Mostrar mensaje de guardado
+    LaunchedEffect(state.showQuoteSavedMessage) {
+        if (state.showQuoteSavedMessage) {
+            snackbarHostState.showSnackbar(
+                message = "✓ Cotización guardada",
+                duration = androidx.compose.material3.SnackbarDuration.Short
+            )
+            // Ocultar el mensaje después de mostrarlo
+            viewModel.onAction(QuoteAction.OnDismissSavedMessage)
+        }
+    }
 
     // Manejar eventos de compartir
     LaunchedEffect(Unit) {
@@ -53,7 +75,7 @@ fun QuoteRoot(
                     }
                     try {
                         context.startActivity(whatsappIntent)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         // Si WhatsApp no está instalado, usar compartir general
                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
@@ -75,7 +97,7 @@ fun QuoteRoot(
                         context.startActivity(
                             Intent.createChooser(emailIntent, "Enviar cotización por email")
                         )
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         // Si no hay app de email, usar compartir general
                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
@@ -91,10 +113,19 @@ fun QuoteRoot(
         }
     }
 
-    QuoteScreen(
-        state = state,
-        onAction = viewModel::onAction
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        QuoteScreen(
+            state = state,
+            onAction = viewModel::onAction
+        )
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(16.dp)
+        )
+    }
 }
 
 @Composable
@@ -119,7 +150,8 @@ fun QuoteScreen(
             savedQuotes = state.savedQuotes,
             quotesSearchQuery = state.quotesSearchQuery,
             filteredSavedQuotes = state.filteredSavedQuotes,
-            onAction = onAction
+            onAction = onAction,
+            modifier = Modifier.widthIn(max = 440.dp)
         )
 
         // Las demás secciones solo aparecen cuando se ha seleccionado un producto
@@ -128,25 +160,29 @@ fun QuoteScreen(
             QuantitySelector(
                 quantity = state.quantity,
                 quickQuantities = state.quickQuantities,
-                onAction = onAction
+                onAction = onAction,
+                modifier = Modifier.widthIn(max = 440.dp)
             )
 
             state.sections.forEach {
                 SectionGroup(
                     section = it,
-                    onAction = onAction
+                    onAction = onAction,
+                    modifier = Modifier.widthIn(max = 440.dp)
                 )
             }
 
             ExtraCostsSection(
                 extraCostTypes = state.extraCostTypes,
-                onAction = onAction
+                onAction = onAction,
+                modifier = Modifier.widthIn(max = 440.dp)
             )
 
             ProfitMarginSelector(
                 profitMargin = state.profitMargin,
                 quickMargins = state.quickProfitMargins,
-                onAction = onAction
+                onAction = onAction,
+                modifier = Modifier.widthIn(max = 440.dp)
             )
 
             // Resumen de cotización
@@ -155,8 +191,11 @@ fun QuoteScreen(
                 onSaveClick = { onAction(QuoteAction.OnSaveQuote) },
                 onShareClick = { onAction(QuoteAction.OnShareQuote) },
                 onShareWhatsAppClick = { onAction(QuoteAction.OnShareQuoteWhatsApp) },
-                onShareEmailClick = { onAction(QuoteAction.OnShareQuoteEmail) }
+                onShareEmailClick = { onAction(QuoteAction.OnShareQuoteEmail) },
+                modifier = Modifier.widthIn(max = 440.dp)
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
