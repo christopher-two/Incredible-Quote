@@ -30,4 +30,12 @@ sealed interface QuoteAction {
     data class OnExtraCostTypeToggled(
         val costTypeId: String
     ) : QuoteAction
+
+    data class OnProfitMarginChanged(
+        val margin: Int
+    ) : QuoteAction
+
+    data class OnQuickProfitMarginSelected(
+        val margin: Int
+    ) : QuoteAction
 }

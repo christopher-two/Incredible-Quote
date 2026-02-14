@@ -9,6 +9,8 @@ data class QuoteState(
     val isSearchingProducts: Boolean = false,
     val quantity: Int = 12,
     val quickQuantities: List<Int> = listOf(5, 12, 24, 50, 100),
+    val profitMargin: Int = 50,
+    val quickProfitMargins: List<Int> = listOf(0, 25, 50, 75, 100),
     val sections: List<SectionGroup> = listOf(
         SectionGroup(
             title = "Tipo de Venta",

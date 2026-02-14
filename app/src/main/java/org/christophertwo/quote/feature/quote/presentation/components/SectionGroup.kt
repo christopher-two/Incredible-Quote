@@ -3,8 +3,10 @@ package org.christophertwo.quote.feature.quote.presentation.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.ButtonGroup
 import androidx.compose.material3.Card
@@ -55,14 +57,16 @@ fun SectionGroup(
                 },
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .height(70.dp)
+                    .fillMaxWidth(),
                 expandedRatio = 0.1f
             ) {
                 section.options.forEach { option ->
                     toggleableItem(
                         checked = option.isSelected,
                         label = option.title,
-                        weight = 2f,
+                        weight = 3f,
                         onCheckedChange = { checked ->
                             if (checked) {
                                 onAction(
@@ -73,6 +77,15 @@ fun SectionGroup(
                                 )
                             }
                         },
+                        icon = {
+                            if (option.isSelected) {
+                                Icon(
+                                    imageVector = Icons.Default.Check,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onPrimary,
+                                )
+                            }
+                        }
                     )
                 }
             }

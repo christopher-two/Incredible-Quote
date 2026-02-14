@@ -17,12 +17,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import org.christophertwo.quote.core.ui.theme.AppTheme
 import org.christophertwo.quote.feature.quote.presentation.components.ExtraCostsSection
 import org.christophertwo.quote.feature.quote.presentation.components.ProductSelector
+import org.christophertwo.quote.feature.quote.presentation.components.ProfitMarginSelector
 import org.christophertwo.quote.feature.quote.presentation.components.QuantitySelector
 import org.christophertwo.quote.feature.quote.presentation.components.SectionGroup
 
 @Composable
 fun QuoteRoot(
-    viewModel: QuoteViewModel = viewModel()
+    viewModel: QuoteViewModel
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -40,7 +41,7 @@ fun QuoteScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -72,6 +73,12 @@ fun QuoteScreen(
 
             ExtraCostsSection(
                 extraCostTypes = state.extraCostTypes,
+                onAction = onAction
+            )
+
+            ProfitMarginSelector(
+                profitMargin = state.profitMargin,
+                quickMargins = state.quickProfitMargins,
                 onAction = onAction
             )
         }

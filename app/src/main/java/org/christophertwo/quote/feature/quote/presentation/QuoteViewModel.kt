@@ -118,6 +118,18 @@ class QuoteViewModel(
                     )
                 }
             }
+
+            is QuoteAction.OnProfitMarginChanged -> {
+                _state.update { currentState ->
+                    currentState.copy(profitMargin = action.margin.coerceIn(0, 100))
+                }
+            }
+
+            is QuoteAction.OnQuickProfitMarginSelected -> {
+                _state.update { currentState ->
+                    currentState.copy(profitMargin = action.margin)
+                }
+            }
         }
     }
 
