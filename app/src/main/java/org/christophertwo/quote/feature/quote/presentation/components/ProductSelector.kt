@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,9 +35,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.christophertwo.quote.feature.quote.presentation.QuoteAction
 import org.christophertwo.quote.feature.quote.presentation.QuoteState
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -44,6 +51,9 @@ fun ProductSelector(
     searchQuery: String,
     searchResults: List<QuoteState.Product>,
     isSearching: Boolean,
+    savedQuotes: List<QuoteState.SavedQuote>,
+    quotesSearchQuery: String,
+    filteredSavedQuotes: List<QuoteState.SavedQuote>,
     modifier: Modifier = Modifier,
     onAction: (QuoteAction) -> Unit
 ) {
@@ -110,11 +120,12 @@ fun ProductSelector(
                     }
                 }
             } else {
-                // Mostrar buscador
+                // Mostrar buscador y cotizaciones guardadas
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    // Buscador de productos
                     TextField(
                         value = searchQuery,
                         onValueChange = {
@@ -194,9 +205,135 @@ fun ProductSelector(
                                 }
                             }
                         }
+                    } else if (savedQuotes.isNotEmpty()) {
+                        // Mostrar cotizaciones guardadas cuando no hay búsqueda activa
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = "Cotizaciones Guardadas",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+
+                            // Buscador de cotizaciones
+                            TextField(
+                                value = quotesSearchQuery,
+                                onValueChange = {
+                                    onAction(QuoteAction.OnQuotesSearchQueryChanged(it))
+                                },
+                                placeholder = { Text("Buscar en cotizaciones...") },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null
+                                    )
+                                },
+                                colors = TextFieldDefaults.colors(
+                                    focusedIndicatorColor = Color.Transparent,
+                                    unfocusedIndicatorColor = Color.Transparent,
+                                    disabledIndicatorColor = Color.Transparent,
+                                ),
+                                shape = MaterialTheme.shapes.large,
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+
+                            // Lista de cotizaciones guardadas
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = MaterialTheme.shapes.large,
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surface,
+                                )
+                            ) {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .heightIn(max = 250.dp)
+                                ) {
+                                    items(filteredSavedQuotes) { quote ->
+                                        SavedQuoteItem(
+                                            quote = quote,
+                                            onLoadClick = {
+                                                onAction(QuoteAction.OnLoadSavedQuote(quote.id))
+                                            },
+                                            onDeleteClick = {
+                                                onAction(QuoteAction.OnDeleteSavedQuote(quote.id))
+                                            }
+                                        )
+                                        if (quote != filteredSavedQuotes.last()) {
+                                            HorizontalDivider()
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
+}
+
+@Suppress("DEPRECATION")
+@Composable
+private fun SavedQuoteItem(
+    quote: QuoteState.SavedQuote,
+    onLoadClick: () -> Unit,
+    onDeleteClick: () -> Unit
+) {
+    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "MX"))
+
+    ListItem(
+        headlineContent = {
+            Text(
+                text = quote.productName,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+        },
+        supportingContent = {
+            Column {
+                Text("${quote.quantity} unidades")
+                Text(
+                    text = currencyFormat.format(quote.total),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = dateFormat.format(Date(quote.timestamp)),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        leadingContent = {
+            Icon(
+                imageVector = Icons.Default.AccessTime,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        trailingContent = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Eliminar",
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+        },
+        modifier = Modifier.clickable(onClick = onLoadClick),
+        colors = ListItemDefaults.colors(
+            containerColor = Color.Transparent
+        )
+    )
 }

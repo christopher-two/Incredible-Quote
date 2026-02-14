@@ -38,4 +38,24 @@ sealed interface QuoteAction {
     data class OnQuickProfitMarginSelected(
         val margin: Int
     ) : QuoteAction
+
+    data object OnShareQuote : QuoteAction
+
+    data object OnShareQuoteWhatsApp : QuoteAction
+
+    data object OnShareQuoteEmail : QuoteAction
+
+    data object OnSaveQuote : QuoteAction
+
+    data class OnLoadSavedQuote(
+        val quoteId: String
+    ) : QuoteAction
+
+    data class OnDeleteSavedQuote(
+        val quoteId: String
+    ) : QuoteAction
+
+    data class OnQuotesSearchQueryChanged(
+        val query: String
+    ) : QuoteAction
 }
