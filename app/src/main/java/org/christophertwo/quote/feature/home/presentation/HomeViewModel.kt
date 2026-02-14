@@ -32,7 +32,7 @@ class HomeViewModel(private val navigationController: NavigationController) : Vi
         when (action) {
             is HomeAction.OnTabSelected -> {
                 navigationController.switchTab(action.tab)
-                _state.update { it.copy(selectedTab = action.tab) }
+                _state.update { it.copy(selectedTab = action.tab, topBarTitle = action.tab.label) }
             }
 
             is HomeAction.OnFabClick -> {

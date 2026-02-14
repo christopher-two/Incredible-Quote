@@ -4,6 +4,7 @@ import org.koin.dsl.module
 import org.koin.plugin.module.dsl.factory
 import org.christophertwo.quote.feature.auth.domain.usecase.CheckSessionUseCase
 import org.christophertwo.quote.feature.auth.domain.usecase.LoginUseCase
+import org.christophertwo.quote.feature.quote.domain.usecase.SearchProductsUseCase
 import org.christophertwo.quote.feature.settings.domain.usecases.GetThemePreferencesUseCase
 import org.christophertwo.quote.feature.settings.domain.usecases.ResetThemePreferencesUseCase
 import org.christophertwo.quote.feature.settings.domain.usecases.SettingsUseCases
@@ -24,6 +25,9 @@ val useCasesModule = module {
     // Auth Use Cases
     factory<LoginUseCase>()
     factory<CheckSessionUseCase>()
+
+    // Quote Use Cases
+    factory<SearchProductsUseCase>()
 
     // Theme Use Cases individuales
     factory<GetThemePreferencesUseCase>()
