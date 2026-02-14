@@ -4,15 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.compose.viewmodel.koinViewModel
 import org.christophertwo.quote.core.ui.theme.AppTheme
 import org.christophertwo.quote.feature.navigation.wrappers.RootNavigationWrapper
 import org.christophertwo.quote.feature.settings.domain.SplashScreenConfigurator
 import org.christophertwo.quote.main.MainViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 /**
  * MAIN ACTIVITY - Actividad principal con arquitectura MVI
@@ -39,12 +40,15 @@ class MainActivity : ComponentActivity() {
             // Observar el estado usando StateFlow
             val state by viewModel.state.collectAsStateWithLifecycle()
 
+            val isDarkThemeUseDynamicColors = isSystemInDarkTheme()
+
             // Configurar SplashScreen con las preferencias del tema
             LaunchedEffect(state.themePreferences) {
                 SplashScreenConfigurator.configure(
                     activity = this@MainActivity,
                     splashScreen = splashScreen,
-                    preferences = state.themePreferences
+                    preferences = state.themePreferences,
+                    isDarkThemeUseDynamicColors = isDarkThemeUseDynamicColors
                 )
             }
 

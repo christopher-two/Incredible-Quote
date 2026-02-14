@@ -2,8 +2,6 @@ package org.christophertwo.quote.feature.settings.domain
 
 import android.app.Activity
 import android.os.Build
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.view.WindowCompat
 import org.christophertwo.quote.feature.settings.domain.model.ThemePreferences
@@ -26,7 +24,8 @@ object SplashScreenConfigurator {
     fun configure(
         activity: Activity,
         splashScreen: SplashScreen,
-        preferences: ThemePreferences
+        preferences: ThemePreferences,
+        isDarkThemeUseDynamicColors: Boolean,
     ) {
         // Aplicar color de fondo si es Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -34,7 +33,7 @@ object SplashScreenConfigurator {
         }
 
         // Configurar barras del sistema
-        configureSystemBars(activity, preferences)
+        configureSystemBars(activity, preferences, isDarkThemeUseDynamicColors)
     }
 
     /**
@@ -59,27 +58,21 @@ object SplashScreenConfigurator {
     /**
      * Configura las barras del sistema según el tema
      */
-    @Suppress("DEPRECATION")
     private fun configureSystemBars(
         activity: Activity,
-        preferences: ThemePreferences
+        preferences: ThemePreferences,
+        isDarkThemeUseDynamicColors: Boolean
     ) {
         val window = activity.window
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
 
         // Configurar apariencia de las barras según el tema
-        windowInsetsController.isAppearanceLightStatusBars = !preferences.isDarkMode
-        windowInsetsController.isAppearanceLightNavigationBars = !preferences.isDarkMode
-
-        // Configurar colores de las barras
-        val systemBarsColor = if (preferences.isDarkMode) {
-            Color.Companion.Black.toArgb()
+        if (!preferences.useDynamicColors) {
+            windowInsetsController.isAppearanceLightStatusBars = !isDarkThemeUseDynamicColors
+            windowInsetsController.isAppearanceLightNavigationBars = !isDarkThemeUseDynamicColors
         } else {
-            Color.Companion.White.toArgb()
+            windowInsetsController.isAppearanceLightStatusBars = !preferences.isDarkMode
+            windowInsetsController.isAppearanceLightNavigationBars = !preferences.isDarkMode
         }
-
-        // Usar API deprecated pero necesaria para compatibilidad
-        window.statusBarColor = systemBarsColor
-        window.navigationBarColor = systemBarsColor
     }
 }
