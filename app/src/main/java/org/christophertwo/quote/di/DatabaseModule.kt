@@ -41,9 +41,10 @@ val databaseModule = module {
     }
 
     /**
-     * Ejemplo: Proveer DAOs desde la base de datos
-     * Descomentar cuando tengas DAOs definidos
+     * Proveer DAOs desde la base de datos
      */
-    // single { get<AppDatabase>().userDao() }
-    // single { get<AppDatabase>().productDao() }
+    single { get<AppDatabase>().productDao() }
+    single { get<AppDatabase>().clientDao() }
+    single { get<AppDatabase>().quoteDao() }
+    single { get<AppDatabase>().quoteItemDao() }
 }
