@@ -19,17 +19,17 @@ interface IQuoteRepository {
     /**
      * Obtener cotizaciones por cliente
      */
-    fun getByClientId(clientId: Int): Flow<List<QuoteWithItemsData>>
+    fun getByClientId(clientId: String): Flow<List<QuoteWithItemsData>>
 
     /**
      * Obtener cotización con items por ID
      */
-    suspend fun getWithItemsById(id: Int): QuoteWithItemsData?
+    suspend fun getWithItemsById(id: String): QuoteWithItemsData?
 
     /**
      * Obtener cotización simple por ID
      */
-    suspend fun getById(id: Int): Quote?
+    suspend fun getById(id: String): Quote?
 
     /**
      * Obtener cotizaciones por estado

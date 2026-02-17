@@ -20,12 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.christophertwo.quote.feature.quote.presentation.QuoteAction
-import org.christophertwo.quote.feature.quote.presentation.QuoteState
+import org.christophertwo.quote.feature.quote.domain.model.SectionGroup as SectionGroupModel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SectionGroup(
-    section: QuoteState.SectionGroup,
+    section: SectionGroupModel,
     modifier: Modifier = Modifier,
     onAction: (QuoteAction) -> Unit
 ) {

@@ -1,25 +1,26 @@
 package org.christophertwo.quote.feature.quote.domain.usecase
 
 import kotlinx.coroutines.delay
-import org.christophertwo.quote.feature.quote.presentation.QuoteState
+import org.christophertwo.quote.feature.products.domain.model.Product
+import org.christophertwo.quote.feature.products.domain.model.ProductCategory
 
 class SearchProductsUseCase {
 
     // Mock data - después será reemplazado con Room
     private val allProducts = listOf(
-        QuoteState.Product(id = "playera_cuello_redondo", name = "Playera Cuello Redondo"),
-        QuoteState.Product(id = "playera_cuello_v", name = "Playera Cuello V"),
-        QuoteState.Product(id = "playera_polo", name = "Playera Polo"),
-        QuoteState.Product(id = "sudadera", name = "Sudadera"),
-        QuoteState.Product(id = "chamarra", name = "Chamarra"),
-        QuoteState.Product(id = "playera_basica", name = "Playera Básica"),
-        QuoteState.Product(id = "playera_deportiva", name = "Playera Deportiva"),
-        QuoteState.Product(id = "playera_manga_larga", name = "Playera Manga Larga"),
-        QuoteState.Product(id = "chaleco", name = "Chaleco"),
-        QuoteState.Product(id = "pants", name = "Pants"),
+        Product(id = "playera_cuello_redondo", name = "Playera Cuello Redondo", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "playera_cuello_v", name = "Playera Cuello V", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "playera_polo", name = "Playera Polo", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "sudadera", name = "Sudadera", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "chamarra", name = "Chamarra", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "playera_basica", name = "Playera Básica", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "playera_deportiva", name = "Playera Deportiva", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "playera_manga_larga", name = "Playera Manga Larga", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "chaleco", name = "Chaleco", description = "", price = 0.0, category = ProductCategory.CLOTHING),
+        Product(id = "pants", name = "Pants", description = "", price = 0.0, category = ProductCategory.CLOTHING),
     )
 
-    suspend operator fun invoke(query: String): List<QuoteState.Product> {
+    suspend operator fun invoke(query: String): List<Product> {
         // Simular delay de búsqueda
         delay(300)
 

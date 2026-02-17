@@ -22,7 +22,7 @@ class ClientRepository(
     override fun getAll(): Flow<List<Client>> =
         clientDao.getAll().map { it.toDomain() }
 
-    override suspend fun getById(id: Int): Client? =
+    override suspend fun getById(id: String): Client? =
         clientDao.getById(id)?.toDomain()
 
     override fun search(query: String): Flow<List<Client>> =

@@ -24,13 +24,13 @@ class QuoteRepository(
     override fun getAllWithItems(): Flow<List<QuoteWithItemsData>> =
         quoteDao.getAllWithItems().map { it.toDomainWithItems() }
 
-    override fun getByClientId(clientId: Int): Flow<List<QuoteWithItemsData>> =
+    override fun getByClientId(clientId: String): Flow<List<QuoteWithItemsData>> =
         quoteDao.getByClientId(clientId).map { it.toDomainWithItems() }
 
-    override suspend fun getWithItemsById(id: Int): QuoteWithItemsData? =
+    override suspend fun getWithItemsById(id: String): QuoteWithItemsData? =
         quoteDao.getWithItemsById(id)?.toDomain()
 
-    override suspend fun getById(id: Int): Quote? =
+    override suspend fun getById(id: String): Quote? =
         quoteDao.getById(id)?.toDomain()
 
     override fun getByStatus(status: QuoteStatus): Flow<List<QuoteWithItemsData>> =

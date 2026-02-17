@@ -28,20 +28,20 @@ interface QuoteDao {
      */
     @Transaction
     @Query("SELECT * FROM quotes WHERE clientId = :clientId ORDER BY createdAt DESC")
-    fun getByClientId(clientId: Int): Flow<List<QuoteWithItems>>
+    fun getByClientId(clientId: String): Flow<List<QuoteWithItems>>
 
     /**
      * Obtener cotización con items por ID
      */
     @Transaction
     @Query("SELECT * FROM quotes WHERE id = :id")
-    suspend fun getWithItemsById(id: Int): QuoteWithItems?
+    suspend fun getWithItemsById(id: String): QuoteWithItems?
 
     /**
      * Obtener cotización simple por ID
      */
     @Query("SELECT * FROM quotes WHERE id = :id")
-    suspend fun getById(id: Int): QuoteEntity?
+    suspend fun getById(id: String): QuoteEntity?
 
     /**
      * Obtener cotizaciones por estado

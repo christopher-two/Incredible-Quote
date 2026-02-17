@@ -4,8 +4,8 @@ package org.christophertwo.quote.feature.quote.domain.model
  * Quote DTO - Data Transfer Object para presentación
  */
 data class Quote(
-    val id: Int = 0,
-    val clientId: Int,
+    val id: String = "",
+    val clientId: String,
     val createdAt: Long = System.currentTimeMillis(),
     val status: QuoteStatus = QuoteStatus.PENDING,
     val totalAmount: Double = 0.0,
@@ -17,9 +17,9 @@ data class Quote(
  * QuoteItem DTO - Item individual en una cotización
  */
 data class QuoteItem(
-    val id: Int = 0,
-    val quoteId: Int,
-    val productId: Int,
+    val id: String = "",
+    val quoteId: String,
+    val productId: String,
     val quantity: Int,
     val unitPrice: Double,
     val subtotal: Double = quantity * unitPrice

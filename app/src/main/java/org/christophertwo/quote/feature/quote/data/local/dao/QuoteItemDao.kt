@@ -24,7 +24,7 @@ interface QuoteItemDao {
      * Obtener item por ID
      */
     @Query("SELECT * FROM quote_items WHERE id = :id")
-    suspend fun getById(id: Int): QuoteItemEntity?
+    suspend fun getById(id: String): QuoteItemEntity?
 
     /**
      * Insertar item

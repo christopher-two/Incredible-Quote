@@ -31,7 +31,7 @@ interface ProductDao {
      * Obtener producto por ID
      */
     @Query("SELECT * FROM products WHERE id = :id")
-    suspend fun getById(id: Int): ProductEntity?
+    suspend fun getById(id: String): ProductEntity?
 
     /**
      * Buscar productos por nombre

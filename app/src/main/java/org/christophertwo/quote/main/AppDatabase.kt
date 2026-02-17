@@ -33,7 +33,7 @@ import org.christophertwo.quote.feature.quote.data.local.dao.QuoteItemDao
         QuoteEntity::class,
         QuoteItemEntity::class
     ],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(EnumConverters::class)

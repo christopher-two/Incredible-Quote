@@ -1,5 +1,11 @@
 package org.christophertwo.quote.feature.quote.presentation
 
+import org.christophertwo.quote.feature.quote.domain.model.ExtraCostType
+import org.christophertwo.quote.feature.products.domain.model.Product
+import org.christophertwo.quote.feature.quote.domain.model.SavedQuote
+import org.christophertwo.quote.feature.quote.domain.model.SectionGroup
+import org.christophertwo.quote.feature.quote.domain.model.SectionOption
+
 data class QuoteState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
@@ -112,34 +118,6 @@ data class QuoteState(
         ),
     ),
 ) {
-    data class SectionGroup(
-        val title: String,
-        val options: List<SectionOption>
-    )
-    data class SectionOption(
-        val title: String,
-        val isSelected: Boolean,
-    )
-    data class ExtraCostType(
-        val id: String,
-        val name: String,
-        val isSelected: Boolean,
-        val cost: Double
-    )
-    data class Product(
-        val id: String,
-        val name: String
-    )
-
-    data class SavedQuote(
-        val id: String,
-        val productName: String,
-        val quantity: Int,
-        val total: Double,
-        val pricePerUnit: Double,
-        val timestamp: Long,
-        val fullState: QuoteState? = null // Para restaurar la cotización completa
-    )
 
     // Propiedades calculadas para el resumen
     val totalExtraCosts: Double

@@ -28,7 +28,7 @@ class SaveProductUseCase(
 class GetProductByIdUseCase(
     private val repository: IProductRepository
 ) {
-    suspend operator fun invoke(id: Int): Product? = repository.getById(id)
+    suspend operator fun invoke(id: String): Product? = repository.getById(id)
 }
 
 /**

@@ -1,12 +1,14 @@
 package org.christophertwo.quote.feature.quote.presentation
 
+import org.christophertwo.quote.feature.products.domain.model.Product
+
 sealed interface QuoteAction {
     data class OnProductSearchQueryChanged(
         val query: String
     ) : QuoteAction
 
     data class OnProductSelected(
-        val product: QuoteState.Product
+        val product: Product
     ) : QuoteAction
 
     data object OnClearProductSelection : QuoteAction

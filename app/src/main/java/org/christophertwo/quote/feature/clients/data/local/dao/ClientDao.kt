@@ -30,7 +30,7 @@ interface ClientDao {
      * Obtener cliente por ID
      */
     @Query("SELECT * FROM clients WHERE id = :id")
-    suspend fun getById(id: Int): ClientEntity?
+    suspend fun getById(id: String): ClientEntity?
 
     /**
      * Buscar clientes por nombre o email

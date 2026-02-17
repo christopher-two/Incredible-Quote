@@ -21,7 +21,7 @@ class ProductRepository(
     override fun getAll(): Flow<List<Product>> =
         productDao.getAll().map { it.toDomain() }
 
-    override suspend fun getById(id: Int): Product? =
+    override suspend fun getById(id: String): Product? =
         productDao.getById(id)?.toDomain()
 
     override fun searchByName(query: String): Flow<List<Product>> =

@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.christophertwo.quote.core.ui.theme.AppTheme
+import org.christophertwo.quote.feature.quote.domain.model.ExtraCostType
 import org.christophertwo.quote.feature.quote.presentation.QuoteState
 import java.text.NumberFormat.getCurrencyInstance
 import java.util.Locale
@@ -266,7 +267,7 @@ fun QuoteSummaryPreview() {
                 basePrice = 150.0,
                 profitMargin = 20,
                 extraCostTypes = listOf(
-                    QuoteState.ExtraCostType(
+                    ExtraCostType(
                         id = "flete",
                         name = "Flete",
                         isSelected = true,

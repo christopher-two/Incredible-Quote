@@ -29,7 +29,7 @@ class SaveClientUseCase(
 class GetClientByIdUseCase(
     private val repository: IClientRepository
 ) {
-    suspend operator fun invoke(id: Int): Client? = repository.getById(id)
+    suspend operator fun invoke(id: String): Client? = repository.getById(id)
 }
 
 /**

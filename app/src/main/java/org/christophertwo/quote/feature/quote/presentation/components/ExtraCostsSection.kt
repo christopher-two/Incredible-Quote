@@ -16,12 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.christophertwo.quote.feature.quote.presentation.QuoteAction
-import org.christophertwo.quote.feature.quote.presentation.QuoteState
+import org.christophertwo.quote.feature.quote.domain.model.ExtraCostType
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ExtraCostsSection(
-    extraCostTypes: List<QuoteState.ExtraCostType>,
+    extraCostTypes: List<ExtraCostType>,
     modifier: Modifier = Modifier,
     onAction: (QuoteAction) -> Unit
 ) {

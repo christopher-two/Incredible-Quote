@@ -19,7 +19,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -38,7 +37,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.christophertwo.quote.feature.quote.presentation.QuoteAction
-import org.christophertwo.quote.feature.quote.presentation.QuoteState
+import org.christophertwo.quote.feature.products.domain.model.Product
+import org.christophertwo.quote.feature.quote.domain.model.SavedQuote
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -47,13 +47,13 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ProductSelector(
-    selectedProduct: QuoteState.Product?,
+    selectedProduct: Product?,
     searchQuery: String,
-    searchResults: List<QuoteState.Product>,
+    searchResults: List<Product>,
     isSearching: Boolean,
-    savedQuotes: List<QuoteState.SavedQuote>,
+    savedQuotes: List<SavedQuote>,
     quotesSearchQuery: String,
-    filteredSavedQuotes: List<QuoteState.SavedQuote>,
+    filteredSavedQuotes: List<SavedQuote>,
     modifier: Modifier = Modifier,
     onAction: (QuoteAction) -> Unit
 ) {
@@ -280,7 +280,7 @@ fun ProductSelector(
 @Suppress("DEPRECATION")
 @Composable
 private fun SavedQuoteItem(
-    quote: QuoteState.SavedQuote,
+    quote: SavedQuote,
     onLoadClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {

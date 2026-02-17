@@ -22,7 +22,7 @@ class GetAllQuotesUseCase(
 class GetQuotesByClientUseCase(
     private val repository: IQuoteRepository
 ) {
-    operator fun invoke(clientId: Int): Flow<List<QuoteWithItemsData>> =
+    operator fun invoke(clientId: String): Flow<List<QuoteWithItemsData>> =
         repository.getByClientId(clientId)
 }
 
@@ -32,7 +32,7 @@ class GetQuotesByClientUseCase(
 class GetQuoteWithItemsUseCase(
     private val repository: IQuoteRepository
 ) {
-    suspend operator fun invoke(id: Int): QuoteWithItemsData? =
+    suspend operator fun invoke(id: String): QuoteWithItemsData? =
         repository.getWithItemsById(id)
 }
 

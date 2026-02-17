@@ -22,7 +22,7 @@ interface IProductRepository {
     /**
      * Obtener producto por ID
      */
-    suspend fun getById(id: Int): Product?
+    suspend fun getById(id: String): Product?
 
     /**
      * Buscar productos por nombre

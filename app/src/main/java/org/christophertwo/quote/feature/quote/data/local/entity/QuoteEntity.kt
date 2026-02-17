@@ -2,6 +2,7 @@ package org.christophertwo.quote.feature.quote.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.christophertwo.quote.feature.clients.data.local.entity.ClientEntity
 import org.christophertwo.quote.feature.quote.domain.model.QuoteStatus
@@ -18,13 +19,16 @@ import org.christophertwo.quote.feature.quote.domain.model.QuoteStatus
             childColumns = ["clientId"],
             onDelete = ForeignKey.CASCADE
         )
+    ],
+    indices = [
+        Index(value = ["clientId"])
     ]
 )
 data class QuoteEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String = "",
 
-    val clientId: Int,
+    val clientId: String,
 
     val createdAt: Long = System.currentTimeMillis(),
 

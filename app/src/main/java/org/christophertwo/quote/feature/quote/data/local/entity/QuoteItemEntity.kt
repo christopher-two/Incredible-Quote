@@ -2,6 +2,7 @@ package org.christophertwo.quote.feature.quote.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.christophertwo.quote.feature.products.data.local.entity.ProductEntity
 
@@ -23,15 +24,19 @@ import org.christophertwo.quote.feature.products.data.local.entity.ProductEntity
             childColumns = ["productId"],
             onDelete = ForeignKey.RESTRICT
         )
+    ],
+    indices = [
+        Index(value = ["quoteId"]),
+        Index(value = ["productId"])
     ]
 )
 data class QuoteItemEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String = "",
 
-    val quoteId: Int,
+    val quoteId: String,
 
-    val productId: Int,
+    val productId: String,
 
     val quantity: Int,
 

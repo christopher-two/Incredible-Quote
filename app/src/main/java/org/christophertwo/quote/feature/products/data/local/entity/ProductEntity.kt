@@ -12,8 +12,8 @@ import org.christophertwo.quote.feature.products.domain.model.ProductCategory
  */
 @Entity(tableName = "products")
 data class ProductEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String = "",
 
     val name: String,
 

@@ -7,7 +7,7 @@ package org.christophertwo.quote.feature.products.domain.model
  * Separado de ProductEntity para mayor flexibilidad
  */
 data class Product(
-    val id: Int = 0,
+    val id: String = "",
     val name: String,
     val description: String,
     val price: Double,

@@ -22,7 +22,7 @@ interface IClientRepository {
     /**
      * Obtener cliente por ID
      */
-    suspend fun getById(id: Int): Client?
+    suspend fun getById(id: String): Client?
 
     /**
      * Buscar clientes por nombre o email

@@ -11,10 +11,16 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.christophertwo.quote.feature.quote.domain.model.Quote
+import org.christophertwo.quote.feature.quote.domain.model.QuoteItem
+import org.christophertwo.quote.feature.quote.domain.model.QuoteStatus
+import org.christophertwo.quote.feature.quote.domain.model.SavedQuote
 import org.christophertwo.quote.feature.quote.domain.usecase.GenerateQuoteMessageUseCase
+import org.christophertwo.quote.feature.quote.domain.usecase.QuoteUseCases
 import org.christophertwo.quote.feature.quote.domain.usecase.SearchProductsUseCase
 
 class QuoteViewModel(
+    private val quoteUseCases: QuoteUseCases,
     private val searchProductsUseCase: SearchProductsUseCase,
     private val generateQuoteMessageUseCase: GenerateQuoteMessageUseCase
 ) : ViewModel() {
@@ -26,7 +32,7 @@ class QuoteViewModel(
     val state = _state
         .onStart {
             if (!hasLoadedInitialData) {
-                // TODO: Cargar datos iniciales aquí
+                loadAllQuotes()
                 hasLoadedInitialData = true
             }
         }
@@ -164,7 +170,7 @@ class QuoteViewModel(
             }
 
             is QuoteAction.OnSaveQuote -> {
-                saveCurrentQuote()
+                saveQuoteToDatabase()
             }
 
             is QuoteAction.OnLoadSavedQuote -> {
@@ -186,52 +192,127 @@ class QuoteViewModel(
         }
     }
 
-    private fun saveCurrentQuote() {
-        val currentState = _state.value
-        val newQuote = QuoteState.SavedQuote(
-            id = System.currentTimeMillis().toString(),
-            productName = currentState.selectedProduct?.name ?: "Sin producto",
-            quantity = currentState.quantity,
-            total = currentState.total,
-            pricePerUnit = currentState.pricePerUnit,
-            timestamp = System.currentTimeMillis(),
-            fullState = currentState
-        )
+    /**
+     * Cargar todas las cotizaciones
+     */
+    private fun loadAllQuotes() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            try {
+                quoteUseCases.getAllQuotes()
+                    .collect { quotesWithItems ->
+                        _state.update { state ->
+                            state.copy(
+                                savedQuotes = quotesWithItems.map { quoteWithItems ->
+                                    SavedQuote(
+                                        id = quoteWithItems.quote.id,
+                                        productName = "Cotización #${quoteWithItems.quote.id}",
+                                        quantity = quoteWithItems.items.sumOf { it.quantity },
+                                        total = quoteWithItems.totalAmount,
+                                        pricePerUnit = 0.0,
+                                        timestamp = quoteWithItems.quote.createdAt
+                                    )
+                                },
+                                isLoading = false
+                            )
+                        }
+                    }
+            } catch (e: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        errorMessage = e.message ?: "Error al cargar cotizaciones"
+                    )
+                }
+            }
+        }
+    }
 
-        _state.update { state ->
-            val updatedQuotes = (state.savedQuotes + newQuote).sortedByDescending { it.timestamp }
-            state.copy(
-                savedQuotes = updatedQuotes,
-                filteredSavedQuotes = updatedQuotes,
-                showQuoteSavedMessage = true
-            )
+    /**
+     * Guardar cotización en base de datos
+     */
+    private fun saveQuoteToDatabase() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            try {
+                val currentState = _state.value
+                val selectedProduct = currentState.selectedProduct
+                
+                if (selectedProduct == null) {
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            errorMessage = "Selecciona un producto primero"
+                        )
+                    }
+                    return@launch
+                }
+                
+                val newQuote = Quote(
+                    clientId = "",
+                    status = QuoteStatus.PENDING,
+                    totalAmount = currentState.basePrice * currentState.quantity,
+                    notes = ""
+                )
+                
+                val quoteId = quoteUseCases.createQuote(newQuote)
+                
+                // Agregar item a la cotización
+                val item = QuoteItem(
+                   quoteId = quoteId.toString(),
+                    productId = selectedProduct.id,
+                    quantity = currentState.quantity,
+                    unitPrice = selectedProduct.price
+                )
+                quoteUseCases.addItemToQuote(item)
+                
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        showQuoteSavedMessage = true,
+                        errorMessage = null
+                    )
+                }
+                loadAllQuotes()
+            } catch (e: Exception) {
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        errorMessage = e.message ?: "Error al guardar cotización"
+                    )
+                }
+            }
         }
     }
 
     private fun loadSavedQuote(quoteId: String) {
-        val savedQuote = _state.value.savedQuotes.find { it.id == quoteId }
-        savedQuote?.fullState?.let { savedState ->
-            _state.update {
-                savedState.copy(
-                    savedQuotes = _state.value.savedQuotes,
-                    filteredSavedQuotes = _state.value.filteredSavedQuotes,
-                    quotesSearchQuery = "",
-                    productSearchQuery = "",
-                    productSearchResults = emptyList()
-                )
+        viewModelScope.launch {
+            try {
+                val quoteWithItems = quoteUseCases.getQuoteWithItems(quoteId)
+                quoteWithItems?.let { quote ->
+                    // TODO: Cargar el estado de la cotización
+                }
+            } catch (e: Exception) {
+                _state.update { state ->
+                    state.copy(errorMessage = e.message)
+                }
             }
         }
     }
 
     private fun deleteSavedQuote(quoteId: String) {
-        _state.update { state ->
-            val updatedQuotes = state.savedQuotes.filter { it.id != quoteId }
-            state.copy(
-                savedQuotes = updatedQuotes,
-                filteredSavedQuotes = updatedQuotes.filter { quote ->
-                    quote.productName.contains(state.quotesSearchQuery, ignoreCase = true)
+        viewModelScope.launch {
+            try {
+                val quoteWithItems = quoteUseCases.getQuoteWithItems(quoteId)
+                quoteWithItems?.let { quote ->
+                    quoteUseCases.deleteQuote(quote.quote)
+                    loadAllQuotes()
                 }
-            )
+            } catch (e: Exception) {
+                _state.update { state ->
+                    state.copy(errorMessage = e.message)
+                }
+            }
         }
     }
 
@@ -278,4 +359,3 @@ class QuoteViewModel(
         }
     }
 }
-

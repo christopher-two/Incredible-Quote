@@ -9,8 +9,8 @@ import org.christophertwo.quote.feature.clients.domain.model.ClientType
  */
 @Entity(tableName = "clients")
 data class ClientEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String = "",
 
     val name: String,
 
